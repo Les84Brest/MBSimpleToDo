@@ -2,15 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-
 import ToDoApp from './components/ToDoApp/TodoApp';
+import { Provider } from 'react-redux';
+import { store } from './store/store'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ToDoApp />
+    <Provider store={store}>
+      <ToDoApp />
+    </Provider>
   </React.StrictMode>
 );
 
