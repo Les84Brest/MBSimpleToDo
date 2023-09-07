@@ -1,14 +1,43 @@
-import cn from "classnames";
+import { useState } from 'react';
+import { Container, Box, Typography } from "@mui/material";
+import Header from "../Header";
+import Search from '../Search';
+import data from './data'
+import TasksList from "../TasksList";
 
-import s from './TodoApp.module.scss';
 
-const ToDoApp = () => {
-    const classes = cn(s.todo__wrap, { some: true, other: true })
+function ToDoApp() {
+
+    const [search, setSearch] = useState<string>('');
+
+    const handleSearch = () => { }
 
     return (
-        <div className={classes}>
-            SomeTodos
-        </div>
+        <>
+            <Header />
+            <Container>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    my: 1.25
+                }}>
+                    <Typography
+                        align="left"
+                        variant="h2"
+                        sx={{ color: 'text.secondary', mr: '20px' }}
+                    >
+                        todos
+                    </Typography>
+                    <Search
+                        value={search}
+                        onChange={handleSearch}
+                    />
+                </Box>
+                <TasksList tasks={[data]} />
+            </Container>
+        </>
     );
+
 }
-export default ToDoApp;
+
+export default ToDoApp
