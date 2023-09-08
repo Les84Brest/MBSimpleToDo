@@ -16,15 +16,32 @@ import useTask from "./useTask";
 
 const Task: FC<ITask> = ({ id, taskName, todos }) => {
 
-    const { completeToDo } = useTask(id);
+    const { completeToDo, deleteTodo, clearCompleted } = useTask(id);
 
     const cbDeleteTodo = useCallback<(id: number) => void>((id) => {
-        console.log('%cdelete id', 'padding: 5px; background: #3dd; color: #333333;', id);
-    }, [])
+        deleteTodo(id);
+    }, [deleteTodo]);
 
     const cbCompleteTodo = useCallback<(id: number, todoStatus: boolean) => void>((id, todoStatus) => {
         completeToDo(id, todoStatus);
-    }, [completeToDo])
+    }, [completeToDo]);
+
+    const getUncompletedTodosCount = (): number => {
+        if (!todos.length) {
+            return 0;
+        }
+
+        return todos.filter(todo => todo.completed ? false : true).length;
+    }
+
+    const getCompletedTodosCount = (): number => {
+        if (!todos.length) {
+            return 0;
+        }
+
+        return todos.filter(todo => todo.completed ? true : false).length;
+    }
+
 
     return (
         <Grid item xs={12} md={4}>
@@ -45,14 +62,14 @@ const Task: FC<ITask> = ({ id, taskName, todos }) => {
                     <CardActions>
                         <Box>
                             <Typography sx={{ fontSize: 10 }} color="text.secondary">
-                                2 items left
+                                {getUncompletedTodosCount()} items left
                             </Typography>
                             <ButtonGroup variant="outlined" aria-label="filter button group">
                                 <Button>All</Button>
                                 <Button>Active</Button>
                                 <Button>Completed</Button>
                             </ButtonGroup>
-                            <Button>Clear completed</Button>
+                            <Button onClick={clearCompleted} size='small' disabled={!(getCompletedTodosCount() > 0)}>Clear completed</Button>
                         </Box>
                     </CardActions>
                 </Card>

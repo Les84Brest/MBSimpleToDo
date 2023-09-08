@@ -14,29 +14,9 @@ type ToggleCompletedPayload = CommonActionPayload & {
     todoStatus: boolean
 }
 
-type AddTodoPayload = CommonActionPayload & {todo: ToDo}
-type DelTodoPayload = CommonActionPayload & {todoId: number}
+type AddTodoPayload = CommonActionPayload & { todo: ToDo }
+type DelTodoPayload = CommonActionPayload & { todoId: number }
 
-
-// export type Photo = {
-//     albumId: number,
-//     id: number,
-//     title: string,
-//     url: string,
-//     thumbnailUrl: string,
-// }
-
-// export enum Status {
-//     LOADING = 'loading',
-//     SUCCESS = 'success',
-//     ERROR = 'error'
-// }
-
-// export interface IPhotoState {
-//     photos: Photo[];
-//     status: Status;
-//     error: string | null;
-// }
 
 interface ITaskState {
     tasks: Array<ITask>
@@ -45,6 +25,12 @@ interface ITaskState {
 const initialState: ITaskState = {
     tasks: data,
 };
+
+function getEditedTask(tasks: ITask[], taskId: number): ITask | null {
+    const currentTask = tasks.find((task) => task.id === taskId);
+
+    return currentTask ? currentTask : null;
+}
 
 export const tasksSlice = createSlice({
     name: 'tasks',
@@ -60,8 +46,14 @@ export const tasksSlice = createSlice({
         },
 
         deleteTodo(state, action: PayloadAction<DelTodoPayload>) {
-            //TODO delete todo logic
-            console.log('%cdeleteTodo', 'padding: 5px; background: FloralWhite; color: red;');
+            const { taskId, todoId } = action.payload;
+
+            const editedTask = getEditedTask(state.tasks, taskId);
+            console.log('%cedited task', 'padding: 5px; background: FloralWhite; color: red;', editedTask);
+            if (editedTask) {
+                editedTask.todos = editedTask.todos.filter(todo => todo.id !== todoId);
+            }
+
         },
 
         toggleCompleted(state, action: PayloadAction<ToggleCompletedPayload>) {
@@ -74,12 +66,20 @@ export const tasksSlice = createSlice({
             if (editedTodo) {
                 editedTodo.completed = todoStatus;
             }
+        },
+
+        clearAllCompletedTodosInTask(state, action: PayloadAction<number>) {
+            const editedTodo = getEditedTask(state.tasks, action.payload)
+
+            if (editedTodo) {
+                editedTodo.todos = editedTodo.todos.filter(todo => todo.completed === false);
+            }
         }
 
     },
 
 });
 
-export const { addTask, addTodo, deleteTodo, toggleCompleted } = tasksSlice.actions
+export const { addTask, addTodo, deleteTodo, toggleCompleted, clearAllCompletedTodosInTask } = tasksSlice.actions
 
 export default tasksSlice.reducer;

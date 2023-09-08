@@ -29,8 +29,9 @@ const ToDoItem: FC<ToDoItemProps> = ({ todo, onClickDelete, onClickComplete }) =
                         <DeleteIcon />
                     </IconButton>
                 }
+                sx={{px:0, py:0}}
             >
-                <IconButton edge="end" aria-label="complete" onClick={handleComplete}>
+                <IconButton edge="end" aria-label="complete" size='large' onClick={handleComplete}>
                     {completed ? <CheckCircle /> : <RadioButtonUnchecked />}
                 </IconButton >
                 <ListItemText
