@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { ITask } from "../../types/types";
 import {
     Button,
@@ -12,8 +12,19 @@ import {
     ButtonGroup,
 } from "@mui/material";
 import ToDoItem from "../Todo/TodoItem";
+import useTask from "./useTask";
 
 const Task: FC<ITask> = ({ id, taskName, todos }) => {
+
+    const { completeToDo } = useTask(id);
+
+    const cbDeleteTodo = useCallback<(id: number) => void>((id) => {
+        console.log('%cdelete id', 'padding: 5px; background: #3dd; color: #333333;', id);
+    }, [])
+
+    const cbCompleteTodo = useCallback<(id: number, todoStatus: boolean) => void>((id, todoStatus) => {
+        completeToDo(id, todoStatus);
+    }, [completeToDo])
 
     return (
         <Grid item xs={12} md={4}>
@@ -24,7 +35,11 @@ const Task: FC<ITask> = ({ id, taskName, todos }) => {
                             {taskName}
                         </Typography>
                         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                            {todos.map(todo => <ToDoItem {...todo} key={todo.id} />)}
+                            {todos.map(todo => <ToDoItem
+                                todo={todo}
+                                onClickComplete={cbCompleteTodo}
+                                onClickDelete={cbDeleteTodo}
+                                key={todo.id} />)}
                         </List>
                     </CardContent>
                     <CardActions>

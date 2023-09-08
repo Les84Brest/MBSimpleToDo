@@ -2,26 +2,39 @@ import React, { FC } from "react";
 import { ToDo } from "../../types/types";
 import { ListItem, IconButton, Avatar, ListItemText, Divider } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import FolderIcon from '@mui/icons-material/Folder';
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
-const ToDoItem: FC<ToDo> = ({ id, title, completed }) => {
 
+interface ToDoItemProps {
+    todo: ToDo;
+    onClickDelete: (id: number) => void;
+    onClickComplete: (id: number, todoStatus: boolean) => void;
+}
+
+const ToDoItem: FC<ToDoItemProps> = ({ todo, onClickDelete, onClickComplete }) => {
+    const { id, title, completed } = todo;
+
+    const handleDelete = () => {
+        onClickDelete(id)
+    }
+
+    const handleComplete = () => {
+        onClickComplete(id, !completed);
+    }
     return (
         <>
             <ListItem
                 secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
+                    <IconButton edge="end" aria-label="delete" onClick={handleDelete}>
                         <DeleteIcon />
                     </IconButton>
                 }
             >
-                <IconButton edge="end" aria-label="complete">
-                    <Avatar>
-                        {completed ? <CheckCircle /> : <RadioButtonUnchecked />}
-                    </Avatar>
+                <IconButton edge="end" aria-label="complete" onClick={handleComplete}>
+                    {completed ? <CheckCircle /> : <RadioButtonUnchecked />}
                 </IconButton >
                 <ListItemText
+                    sx={{textDecoration: completed ? 'line-through' : 'none'} }
                     primary={title}
                 />
             </ListItem>
