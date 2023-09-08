@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Container, Box, Typography } from "@mui/material";
 import Header from "../Header";
 import Search from '../Search';
-import data from './data'
 import TasksList from "../TasksList";
 
 
@@ -33,7 +32,7 @@ function ToDoApp() {
                         onChange={handleSearch}
                     />
                 </Box>
-                <TasksList tasks={[data]} />
+                <TasksList />
             </Container>
         </>
     );

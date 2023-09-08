@@ -1,29 +1,18 @@
 
-import { ITask } from '../../types/types';
 import { Grid } from '@mui/material';
 import { FC } from 'react';
 import Task from '../Task';
+import { useAppSelector } from '../../hooks/redux';
+import { selectTaskData } from '../../store/taskToDoSlice/selectors';
 
-interface TasksListProps {
-    tasks: Array<ITask>;
-}
 
-const TasksList: FC<TasksListProps> = ({ tasks }) => {
+const TasksList: FC = () => {
 
-    //TEST
-    const [data] = tasks;
-    //TEST
+    const {tasks} = useAppSelector(selectTaskData);
 
     return (
         <Grid container spacing={2}>
-            <Task {...data} />
-            <Task {...data} />
-            <Task {...data} />
-            <Task {...data} />
-            <Task {...data} />
-            <Task {...data} />
-            <Task {...data} />
-            <Task {...data} />
+            {tasks.map(task => <Task {...task}  key={task.id}/>)}
         </Grid>
     );
 }
