@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { ToDo } from "../../types/types";
-import { ListItem, IconButton, Avatar, ListItemText, Divider } from "@mui/material";
+import { ListItem, IconButton, ListItemText, Divider, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
@@ -24,22 +24,35 @@ const ToDoItem: FC<ToDoItemProps> = ({ todo, onClickDelete, onClickComplete }) =
     return (
         <>
             <ListItem
-                secondaryAction={
-                    <IconButton edge="end" aria-label="delete" onClick={handleDelete}>
-                        <DeleteIcon />
-                    </IconButton>
-                }
-                sx={{px:0, py:0}}
+                divider
+
+                sx={{ px: 0 }}
             >
-                <IconButton edge="end" aria-label="complete" size='large' onClick={handleComplete}>
+                <IconButton
+                    sx={{ mr: 0 }}
+                    edge="end"
+                    aria-label="complete"
+                    size='large'
+                    onClick={handleComplete}>
                     {completed ? <CheckCircle /> : <RadioButtonUnchecked />}
                 </IconButton >
                 <ListItemText
-                    sx={{textDecoration: completed ? 'line-through' : 'none'} }
+                    sx={{
+                        textDecoration: completed ? 'line-through' : 'none',
+                    }}
                     primary={title}
+                    primaryTypographyProps={{
+                        sx: {
+                            fontSize: 13,
+                            fontWeight: 100
+                        }
+                    }}
                 />
+                <IconButton sx={{ mr: 0 }} edge="end" aria-label="delete" onClick={handleDelete}>
+                    <DeleteIcon />
+                </IconButton>
+
             </ListItem>
-            <Divider />
         </>
     );
 }
