@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from "react";
-import { ITask } from "../../types/types";
-import TaskFilter from './TaskFilter';
+import React, { FC, useCallback, useState, useEffect } from "react";
+import { ITask, ToDo } from "../../types/types";
+import TaskFilter, { Filter } from './TaskFilter';
 import { styled } from '@mui/material/styles';
 import {
     Button,
@@ -25,8 +25,42 @@ const TaskButton = styled(Button)<ButtonProps>(({ theme }) => ({
 
 
 const Task: FC<ITask> = ({ id, taskName, todos }) => {
-
+    const [filter, setFilter] = useState<Filter>(Filter.ALL_TODOS);
+    const [filteredTodos, setFilteredTodos] = useState<Array<ToDo>>(todos);
     const { completeToDo, deleteTodo, clearCompleted } = useTask(id);
+
+    useEffect(() => {
+        switch (filter) {
+            case Filter.ACTIVE_TODOS:
+                const activeTodos = todos.filter(todo => !todo.completed)
+                setFilteredTodos(activeTodos);
+                break;
+            case Filter.COMPLETED_TODOS:
+                const completedTodos = todos.filter((todo) => todo.completed)
+                setFilteredTodos(completedTodos);
+                break;
+            default:
+                setFilteredTodos(sortTodos(todos));
+                break;
+        }
+
+    }, [filter, todos])
+
+    const sortTodos = (todos: ToDo[]): ToDo[] => {
+
+        const sortedTodos = todos.slice()
+            .sort((todo, nextTodo) => {
+                if (todo.completed === nextTodo.completed) {
+                    return 0
+                }
+                if (todo.completed) {
+                    return 1;
+                }
+                return -1;
+            })
+
+        return sortedTodos;
+    }
 
     const cbDeleteTodo = useCallback<(id: number) => void>((id) => {
         deleteTodo(id);
@@ -54,8 +88,7 @@ const Task: FC<ITask> = ({ id, taskName, todos }) => {
 
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>,
         value: string) => {
-        console.log('%cvalue', 'padding: 5px; background: DarkGreen; color: MediumSpringGreen;', value);
-        // setFilterValue(value);
+        setFilter(value as Filter);
     }
 
     return (
@@ -72,7 +105,7 @@ const Task: FC<ITask> = ({ id, taskName, todos }) => {
                         </Typography>
                         <Divider />
                         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                            {todos.map(todo => <ToDoItem
+                            {filteredTodos.map(todo => <ToDoItem
                                 todo={todo}
                                 onClickComplete={cbCompleteTodo}
                                 onClickDelete={cbDeleteTodo}
@@ -93,7 +126,7 @@ const Task: FC<ITask> = ({ id, taskName, todos }) => {
                                 sx={{ fontSize: 10, alignSelf: 'center' }}
                                 color="text.secondary"
 
-                                >
+                            >
                                 {getUncompletedTodosCount()} items left
                             </Typography>
                             <TaskFilter onChange={handleFilterChange} />

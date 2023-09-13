@@ -3,7 +3,7 @@ import { RadioGroup, FormControlLabel, FormControlLabelProps, Radio } from "@mui
 import { FC } from "react";
 import { styled } from '@mui/material/styles';
 import cn from 'classnames';
-import  './TaskFilter.scss';
+import './TaskFilter.scss';
 
 interface TaskFilterProps {
     onChange: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
@@ -50,18 +50,19 @@ const TaskFilter: FC<TaskFilterProps> = ({ onChange }) => {
             row
             name="filter-buttons-group"
             onChange={handleOnChange}
+            sx={{ justifyContent: 'center' }}
         >
-            <div className={cn('task-filter__item-wrap',{'filter-active': Filter.ALL_TODOS ===currentFilter} )}>
+            <div className={cn('task-filter__item-wrap', { 'filter-active': Filter.ALL_TODOS === currentFilter })}>
                 <TodoFilterLabel
                     value={Filter.ALL_TODOS}
                     control={<Radio sx={{ display: 'none' }} />} label="All" />
             </div>
-            <div className={cn('task-filter__item-wrap',{'filter-active': Filter.ACTIVE_TODOS===currentFilter} )}>
+            <div className={cn('task-filter__item-wrap', { 'filter-active': Filter.ACTIVE_TODOS === currentFilter })}>
                 <TodoFilterLabel
                     value={Filter.ACTIVE_TODOS}
                     control={<Radio sx={{ display: 'none' }} />} label="Active" />
             </div>
-            <div className={cn('task-filter__item-wrap',{'filter-active': Filter.COMPLETED_TODOS ===currentFilter} )}>
+            <div className={cn('task-filter__item-wrap', { 'filter-active': Filter.COMPLETED_TODOS === currentFilter })}>
                 <TodoFilterLabel
                     value={Filter.COMPLETED_TODOS}
                     control={<Radio sx={{ display: 'none' }} />} label="Completed" />
