@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, Fab } from "@mui/material";
 import Header from "../Header";
 import Search from '../Search';
 import TasksList from "../TasksList";
+import  Add from '@mui/icons-material/Add';
 
 
 function ToDoApp() {
@@ -33,6 +34,9 @@ function ToDoApp() {
                     />
                 </Box>
                 <TasksList />
+                <Fab color="primary" aria-label="add">
+                    <Add />
+                </Fab>
             </Container>
         </>
     );

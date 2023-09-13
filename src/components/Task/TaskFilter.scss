@@ -1,0 +1,6 @@
+.task-filter {
+    &__item-wrap.filter-active {
+        border: 1px #777 solid;
+        border-radius: 4px;
+    }
+}
