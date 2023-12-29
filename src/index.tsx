@@ -2,17 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import ToDoApp from './components/ToDoApp/TodoApp';
 import { Provider } from 'react-redux';
-import { store } from './store/store'
+import { store } from './store/store';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {routes} from "./routes";
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+console.log('routes ...>> ', routes);
+
+const router = createBrowserRouter(routes);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToDoApp />
+        <RouterProvider router={router}/>
     </Provider>
   </React.StrictMode>
 );

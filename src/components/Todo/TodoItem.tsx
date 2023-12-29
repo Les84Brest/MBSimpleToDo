@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { ToDo } from "../../types/types";
-import { ListItem, IconButton, ListItemText, Divider, Typography } from "@mui/material";
+import { ListItem, IconButton, ListItemText } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
