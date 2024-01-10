@@ -1,10 +1,10 @@
 import {Navigate} from 'react-router-dom';
-import Todos from "./pages/Todos";
 import MainLayout from "./layouts/MainLayout";
-import Pomodoro from "./pages/Pomodoro";
-import PageNotFound from "./components/PageNotFound";
-import {ReactNode} from "react";
+import {ReactNode, lazy} from "react";
 
+const PageNotFound = lazy( () => import('./components/PageNotFound/PageNotFound'));
+const Todos = lazy(() =>import( "./pages/Todos"));
+const Pomodoro = lazy(() =>import( "./pages/Pomodoro"));
 
 export type ChildRoute = {
     path: string,
