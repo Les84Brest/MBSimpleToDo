@@ -3,9 +3,21 @@ import Todos from "./pages/Todos";
 import MainLayout from "./layouts/MainLayout";
 import Pomodoro from "./pages/Pomodoro";
 import PageNotFound from "./components/PageNotFound";
+import {ReactNode} from "react";
 
 
-const mainRoutes = {
+export type ChildRoute = {
+    path: string,
+    element: ReactNode
+}
+
+export type GeneralRoute = {
+    path: string,
+    element: ReactNode
+    children: Array<ChildRoute>
+}
+
+const mainRoutes: GeneralRoute = {
     path: '/',
     element: <MainLayout/>,
     children: [
@@ -17,7 +29,7 @@ const mainRoutes = {
 };
 
 
-const pomodoroRoutes = {
+const pomodoroRoutes: GeneralRoute = {
     path: 'pomodoro',
     element: <MainLayout/>,
     children: [
@@ -27,4 +39,4 @@ const pomodoroRoutes = {
     ]
 }
 
-export const routes = [mainRoutes, pomodoroRoutes];
+export const routes: Array<GeneralRoute> = [mainRoutes, pomodoroRoutes];
