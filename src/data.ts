@@ -1,4 +1,4 @@
-import { ITask } from "../../types/types"
+import {ITask} from "./types/types";
 
 export const data: ITask[] = [{
     id: 12,

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITask, ToDo } from '../../types/types'
 
 //TODO remove
-import data from '../../components/ToDoApp/data';
+import data from '../../data';
 //TODO remove
 
 type CommonActionPayload = {

@@ -1,0 +1,60 @@
+// import { render, screen } from '@testing-library/react';
+// import userEvent from '@testing-library/user-event';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+//
+// // Your components
+// const Home = () => <h1>Home Page</h1>;
+// const About = () => <h1>About Page</h1>;
+//
+// // Your main App component
+// const App = () => (
+//     <Routes>
+//       <Route path="/" element={<Home />} />
+//       <Route path="/about" element={<About />} />
+//     </Routes>
+// );
+//
+// // Your test
+// test('navigates to about page', () => {
+//   render(
+//       <BrowserRouter>
+//         <App />
+//       </BrowserRouter>
+//   );
+//
+//   // Click on the link to "/about"
+//   userEvent.click(screen.getByText(/about/i));
+//
+//   // Check that the content of the about page is displayed
+//   expect(screen.getByText(/about page/i)).toBeInTheDocument();
+// });
+
+
+
+// Pomodoro page
+//
+// // Your component
+// const Pomodoro = () => <h1>Pomodoro Page</h1>;
+//
+// // Your main App component
+// const App = () => (
+//     <Routes>
+//         <Route path="/pomodoro" element={<Pomodoro />} />
+//     </Routes>
+// );
+//
+// // Your test
+// test('navigates to pomodoro page', () => {
+//     const history = createMemoryHistory();
+//     render(
+//         <Router history={history}>
+//             <App />
+//         </Router>
+//     );
+//
+//     // Push "/pomodoro" onto the history stack.
+//     history.push('/pomodoro');
+//
+//     // Check that the content of the pomodoro page is displayed
+//     expect(screen.getByText(/pomodoro page/i)).toBeInTheDocument();
+// });
