@@ -4,6 +4,7 @@ import PomodoroTypeSwitcher from '../components/PomodoryTypeSwitcher/PomodoryTyp
 import PomodoroDisplay from '../components/PomodoroDisplay';
 import PomodoroTasks from '../components/PomodoroTasks';
 import { formatTime } from "../utils/formatTime";
+import Pomodoro from '../components/Pomodoro';
 
 const POMODORO_INTERVAL = 25;
 const SHORT_BREAK_INTERVAL = 5;
@@ -11,7 +12,7 @@ const LONG_BREAK_INTERVAL = 15;
 
 type IntervalTimeout = ReturnType<typeof setInterval> | null;
 
-export const PomodoroTimer: FC = () => {
+export const PomodoroPage: FC = () => {
     const [timeLeft, setTimeLeft] = useState<number>(25 * 60); // Initial work time in seconds
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [isBreak, setIsBreak] = useState<boolean>(false);
@@ -70,7 +71,9 @@ export const PomodoroTimer: FC = () => {
     return (
         <Container>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                
                 <Typography variant='h2' sx={{ textAlign: 'center' }}>Pomodoro timer</Typography>
+                <Pomodoro/>
                 <PomodoroTypeSwitcher />
                 <PomodoroDisplay value={getProgressValue()} formatedTime={formatTime(timeLeft)} />
                 <Box>
@@ -86,4 +89,4 @@ export const PomodoroTimer: FC = () => {
 }
 
 
-export default PomodoroTimer;
+export default PomodoroPage;

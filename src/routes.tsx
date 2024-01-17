@@ -4,7 +4,7 @@ import {ReactNode, lazy} from "react";
 
 const PageNotFound = lazy( () => import('./components/PageNotFound/PageNotFound'));
 const Todos = lazy(() =>import( "./pages/Todos"));
-const Pomodoro = lazy(() =>import( "./pages/Pomodoro"));
+const PomodoroPage = lazy(() =>import( "./pages/PomodoroPage"));
 
 export type ChildRoute = {
     path: string,
@@ -34,7 +34,7 @@ const pomodoroRoutes: GeneralRoute = {
     element: <MainLayout/>,
     children: [
         {path: '*', element: <Navigate to='/404'/>},
-        {path: '', element: <Pomodoro/>}
+        {path: '', element: <PomodoroPage/>}
 
     ]
 }
