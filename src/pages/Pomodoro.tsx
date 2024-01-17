@@ -1,59 +1,89 @@
-import React, {useState, useEffect} from 'react';
+import { Button, Container, Typography, Box } from '@mui/material';
+import React, { useState, useEffect, FC } from 'react';
+import PomodoroTypeSwitcher from '../components/PomodoryTypeSwitcher/PomodoryTypeSwitcher';
+import PomodoroDisplay from '../components/PomodoroDisplay';
+import PomodoroTasks from '../components/PomodoroTasks';
+import { formatTime } from "../utils/formatTime";
 
-interface TimerProps {
-    minutes: number;
-}
+const POMODORO_INTERVAL = 25;
+const SHORT_BREAK_INTERVAL = 5;
+const LONG_BREAK_INTERVAL = 15;
 
-const Timer: React.FC<TimerProps> = ({minutes}) => {
-    const [seconds, setSeconds] = useState(minutes * 60);
+type IntervalTimeout = ReturnType<typeof setInterval> | null;
+
+export const PomodoroTimer: FC = () => {
+    const [timeLeft, setTimeLeft] = useState<number>(25 * 60); // Initial work time in seconds
+    const [isRunning, setIsRunning] = useState<boolean>(false);
+    const [isBreak, setIsBreak] = useState<boolean>(false);
+    const [intervalId, setIntervalId] = useState<NodeJS.Timer | null>(null);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setSeconds(seconds => seconds - 1);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
+        const tick = () => {
+            setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+        };
 
-    return <div>{Math.floor(seconds / 60)}:{seconds % 60}</div>;
-};
+        if (isRunning) {
+            setIntervalId(setInterval(tick, 1000));
+        } else {
+            clearInterval(intervalId as NodeJS.Timer);
+        }
 
-interface TaskListProps {
-    tasks: string[];
-}
+        return () => clearInterval(intervalId as NodeJS.Timer); // Clear interval on unmount
+    }, [isRunning]);
 
-const TaskList: React.FC<TaskListProps> = ({tasks}) => (
-    <ul>
-        {tasks.map((task, index) => <li key={index}>{task}</li>)}
-    </ul>
-);
+    const handleStart = () => {
+        setIsRunning(true);
+    };
 
-const PomodoroTimer: React.FC = () => {
-    const [isRunning, setIsRunning] = useState(false);
-    const [isBreak, setIsBreak] = useState(false);
-    const [tasks, setTasks] = useState<string[]>([]);
+    const handlePause = () => {
+        setIsRunning(false);
+    };
 
-    const toggleTimer = () => {
-        setIsRunning(!isRunning);
-        if (!isRunning) {
-            setTimeout(() => {
-                setIsBreak(!isBreak);
-            }, isBreak ? 5 * 60 * 1000 : 25 * 60 * 1000);
+    const handleReset = () => {
+        setTimeLeft(25 * 60);
+        setIsRunning(false);
+        setIsBreak(false);
+    };
+
+    const handleBreak = () => {
+        setIsBreak(true);
+        setTimeLeft(5 * 60); // Set break time
+        handleStart();
+    };
+
+    const handleSession = () => {
+        setIsBreak(false);
+        setTimeLeft(25 * 60); // Set work time
+        handleStart();
+    };
+
+    const handleTimeComplete = () => {
+        if (isBreak) {
+            handleSession();
+        } else {
+            handleBreak();
         }
     };
 
-    const addTask = (task: string) => {
-        setTasks([...tasks, task]);
-    };
+    const getProgressValue = () => Math.trunc((timeLeft / (25 * 60)) * 100)
 
     return (
-        <div>
-            <button onClick={toggleTimer}>{isRunning ? 'Stop' : 'Start'}</button>
-            {isRunning && <Timer minutes={isBreak ? 5 : 25}/>}
-            <TaskList tasks={tasks}/>
-            {/* Add task input and button here */}
-        </div>
+        <Container>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <Typography variant='h2' sx={{ textAlign: 'center' }}>Pomodoro timer</Typography>
+                <PomodoroTypeSwitcher />
+                <PomodoroDisplay value={getProgressValue()} formatedTime={formatTime(timeLeft)} />
+                <Box>
+                    <Button variant="contained" onClick={handleStart} disabled={isRunning}> Start</Button>
+                    <Button variant="contained" onClick={handlePause} disabled={!isRunning}> Pause</Button>
+                    <Button onClick={handleReset} variant="outlined">Reset</Button>
+                </Box>
+                {isRunning && !timeLeft && <button onClick={handleTimeComplete}>Next</button>}
+                <PomodoroTasks tasks={['First task', 'second task']}/>
+            </Box>
+        </Container>
     );
+}
 
-};
 
 export default PomodoroTimer;

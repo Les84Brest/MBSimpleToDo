@@ -10,3 +10,5 @@ export interface ITask {
     todos: ToDo[];
 }
 
+export type ValueOf<T> = T[keyof T];
+
