@@ -1,9 +1,9 @@
 import { ValueOf } from "../../types/types";
 
 const pomodoroTypes = {
-    POMODORO: 'pomodoro',
-    SHORT_BREAK: 'short_breack',
-    LONG_BREAK: 'long_breack'
+    POMODORO: 'POMODORO',
+    SHORT_BREAK: 'SHORT_BREAK',
+    LONG_BREAK: 'LONG_BREAK'
 } as const;
 
 type PomodoroTypes =  ValueOf<typeof pomodoroTypes>;
