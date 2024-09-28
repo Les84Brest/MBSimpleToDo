@@ -21,6 +21,7 @@ const ToDoItem: FC<ToDoItemProps> = ({ todo, onClickDelete, onClickComplete }) =
     const handleComplete = () => {
         onClickComplete(id, !completed);
     }
+
     return (
         <>
             <ListItem
@@ -48,10 +49,11 @@ const ToDoItem: FC<ToDoItemProps> = ({ todo, onClickDelete, onClickComplete }) =
                         }
                     }}
                 />
-                <IconButton sx={{ mr: 0 }} edge="end" aria-label="delete" onClick={handleDelete}>
+                <IconButton sx={{ mr: 0 }} edge="end" aria-label="edit" onClick={handleDelete}>
                     <DeleteIcon />
                 </IconButton>
 
+               
             </ListItem>
         </>
     );

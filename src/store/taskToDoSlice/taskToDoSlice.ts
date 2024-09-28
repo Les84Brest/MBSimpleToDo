@@ -49,7 +49,6 @@ export const tasksSlice = createSlice({
             const { taskId, todoId } = action.payload;
 
             const editedTask = getEditedTask(state.tasks, taskId);
-            console.log('%cedited task', 'padding: 5px; background: FloralWhite; color: red;', editedTask);
             if (editedTask) {
                 editedTask.todos = editedTask.todos.filter(todo => todo.id !== todoId);
             }

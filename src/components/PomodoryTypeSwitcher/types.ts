@@ -1,9 +1,14 @@
-import { ValueOf } from "../../types/types";
+// import { ValueOf } from "../../types/types";
 
-const pomodoroTypes = {
-    POMODORO: 'POMODORO',
-    SHORT_BREAK: 'SHORT_BREAK',
-    LONG_BREAK: 'LONG_BREAK'
-} as const;
+// const pomodoroTypes = {
+//     POMODORO: 'POMODORO',
+//     SHORT_BREAK: 'SHORT_BREAK',
+//     LONG_BREAK: 'LONG_BREAK'
+// } as const;
 
-type PomodoroTypes =  ValueOf<typeof pomodoroTypes>;
+// export type PomodoroTypes =  ValueOf<typeof pomodoroTypes>;
+export enum PomodoroTypes {
+    POMODORO = 'POMODORO',
+    SHORT_BREAK = 'SHORT_BREAK',
+    LONG_BREAK = 'LONG_BREAK'
+}

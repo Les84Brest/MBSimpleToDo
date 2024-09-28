@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import { FC } from 'react';
 import Task from '../Task';
 import { useAppSelector } from '../../hooks/redux';
-import { selectTaskData } from '../../store/taskToDoSlice/selectors';
+import { selectTaskData } from '../../store/selectors';
 
 
 const TasksList: FC = () => {

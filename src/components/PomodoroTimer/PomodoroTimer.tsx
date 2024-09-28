@@ -3,11 +3,17 @@ import styled from "@emotion/styled";
 import { formatTime } from "../../utils/formatTime";
 import { Box, Button } from "@mui/material";
 import { useNow } from "../../hooks/useNow";
+import { useAppDispatch } from "../../hooks/redux";
+import { startTimer } from "../../store/pomodoroSlice/pomodoroSlice";
+import { PomodoroTypes } from "../PomodoryTypeSwitcher/types";
+import { useAppSelector } from "../../hooks/redux";
+import { selectPomodoroData } from "../../store/selectors";
 
 const STROKE_LENGTH = 631.14;
 
 type PomodoroTimerProps = {
-    workTime: number
+    workTime: number,
+    pomodoroType: PomodoroTypes
 };
 
 const PomodoroCircle = styled.div`
@@ -25,7 +31,39 @@ const PomodoroTime = styled.div`
     color: #eb2626;
 `;
 
-export const PomodoroTimer: FC<PomodoroTimerProps> = ({ workTime }) => {
+const BgCircle = styled.circle`
+    fill: transparent;
+    stroke: #c3bbbb; 
+    stroke-width: 30; 
+    stroke-dasharray: 631.14px; 
+    stroke-dashoffset: 0;
+    r: ${(props) => props.radius};
+    cx: ${(props) => props.cx};
+    cy: ${(props) => props.cy};
+`;
+
+const ProgressCircle = styled.circle(
+    (props) => ({
+        r: props.radius,
+        cx: props.cx,
+        cy: props.cy,
+        stroke: "#eb2626",
+        strokeWidth: 30,
+        strokeLinecap: "butt",
+        strokeDashoffset: props.strokeDashoffset,
+        fill: "transparent",
+        strokeDasharray: "631"
+    })
+);
+
+
+export const PomodoroTimer: FC<PomodoroTimerProps> = ({ workTime, pomodoroType }) => {
+    const pomodoroState = useAppSelector(selectPomodoroData);
+    console.log('pomodoros >> ', pomodoroState);
+    
+
+    const dispatcher = useAppDispatch();
+
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [isPause, setIsPause] = useState<boolean>(false);
     const [startAt, setStartAt] = useState<null | number>(null);
@@ -51,7 +89,16 @@ export const PomodoroTimer: FC<PomodoroTimerProps> = ({ workTime }) => {
         }
 
         setIsRunning(true);
-        setStartAt(Date.now());
+        setStartAt((prev) => {
+            const startDate = Date.now();
+            dispatcher(startTimer({
+                pomodoroType,
+                startAt: startDate,
+                isRunning: true,
+            }));
+
+            return startDate;
+        });
     };
 
     const handlePause = () => {
@@ -76,8 +123,10 @@ export const PomodoroTimer: FC<PomodoroTimerProps> = ({ workTime }) => {
         <>
             <PomodoroCircle>
                 <svg width="221" height="221" viewBox="-27.625 -27.625 276.25 276.25" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'rotate(-90deg)' }}>
-                    <circle r="100.5" cx="110.5" cy="110.5" fill="transparent" stroke="#c3bbbb" stroke-width="30" stroke-dasharray="631.14px" stroke-dashoffset="0"></circle>
-                    <circle r="100.5" cx="110.5" cy="110.5" stroke="#eb2626" stroke-width="30" stroke-linecap="butt" stroke-dashoffset={calculateStrokeLength()} fill="transparent" stroke-dasharray="631"></circle>
+                    <BgCircle cx="110.5" cy="110.5" radius="100.5" />
+                    {/* <circle r="100.5" cx="110.5" cy="110.5" ></circle> */}
+                    <ProgressCircle cx="110.5" cy="110.5" radius="100.5" strokeDashoffset={calculateStrokeLength()} />
+                    {/* <circle r="100.5" cx="110.5" cy="110.5" stroke="#eb2626" stroke-width="30" stroke-linecap="butt" stroke-dashoffset={calculateStrokeLength()} fill="transparent" stroke-dasharray="631"></circle> */}
                 </svg>
                 <PomodoroTime>{formatTime(timeLeft)}</PomodoroTime>
             </PomodoroCircle>
