@@ -1,48 +1,48 @@
 import {ITask} from "./types/types";
 
 export const data: ITask[] = [{
-    id: 12,
+    id: '8tsm09YoC-',
     taskName: 'Первая главная задача',
     todos: [
         {
 
-            "id": 1,
+            "id": "4rF-4DoOnC",
             "title": "delectus aut autem",
             "completed": false
         },
         {
 
-            "id": 2,
+            "id": "Njl_ertB0j",
             "title": "quis ut nam facilis et officia qui",
             "completed": true
         },
         {
 
-            "id": 3,
+            "id": "4NLgp2h-p9",
             "title": "fugiat veniam minus",
             "completed": false
         },
     ]
 },
 {
-    id: 25,
+    id: "25",
     taskName: 'Вторая основная задача',
     todos: [
         {
 
-            "id": 1,
+            "id": "1",
             "title": "Незастуканными быть на месте",
             "completed": false
         },
         {
 
-            "id": 2,
+            "id": "2",
             "title": "quis ut nam facilis et officia qui",
             "completed": true
         },
         {
 
-            "id": 3,
+            "id": "3",
             "title": "fugiat veniam minus",
             "completed": true
         },
@@ -50,24 +50,24 @@ export const data: ITask[] = [{
 },
 
 {
-    id: 138,
+    id: "138",
     taskName: 'Ещё задачка',
     todos: [
         {
 
-            "id": 1,
+            "id": "G_D4lveFVu",
             "title": "Незастуканными быть на месте",
             "completed": true
         },
         {
 
-            "id": 2,
+            "id": "WPfal7-1ZL",
             "title": "quis ut nam facilis et officia qui",
             "completed": true
         },
         {
 
-            "id": 3,
+            "id": "KHGbhd9_b0",
             "title": "fugiat veniam minus",
             "completed": false
         },

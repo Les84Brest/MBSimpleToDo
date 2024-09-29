@@ -1,16 +1,15 @@
 import { useAppDispatch } from "../../hooks/redux";
 import { toggleCompleted, deleteTodo, clearAllCompletedTodosInTask } from "../../store/taskToDoSlice/taskToDoSlice";
 
-export default function useTask(taskId: number) {
+export default function useTask(taskId: string) {
     const dispatcher = useAppDispatch();
 
     return {
-        completeToDo(todoId: number, todoStatus: boolean) {
+        completeToDo(todoId: string, todoStatus: boolean) {
             dispatcher(toggleCompleted({todoId, todoStatus, taskId}));
         },
 
-        deleteTodo(todoId: number) {
-            console.log('%cdelete', 'padding: 5px; background: #3dd; color: #333333;');
+        deleteTodo(todoId: string) {
             dispatcher(deleteTodo({todoId, taskId: taskId}))
         },
 

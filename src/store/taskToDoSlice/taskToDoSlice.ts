@@ -6,16 +6,16 @@ import data from '../../data';
 //TODO remove
 
 type CommonActionPayload = {
-    taskId: number
+    taskId: string
 }
 
 type ToggleCompletedPayload = CommonActionPayload & {
-    todoId: number,
+    todoId: string,
     todoStatus: boolean
 }
 
 type AddTodoPayload = CommonActionPayload & { todo: ToDo }
-type DelTodoPayload = CommonActionPayload & { todoId: number }
+type DelTodoPayload = CommonActionPayload & { todoId: string }
 
 
 interface ITaskState {
@@ -26,7 +26,7 @@ const initialState: ITaskState = {
     tasks: data,
 };
 
-function getEditedTask(tasks: ITask[], taskId: number): ITask | null {
+function getEditedTask(tasks: ITask[], taskId: string): ITask | null {
     const currentTask = tasks.find((task) => task.id === taskId);
 
     return currentTask ? currentTask : null;
@@ -67,7 +67,7 @@ export const tasksSlice = createSlice({
             }
         },
 
-        clearAllCompletedTodosInTask(state, action: PayloadAction<number>) {
+        clearAllCompletedTodosInTask(state, action: PayloadAction<string>) {
             const editedTodo = getEditedTask(state.tasks, action.payload)
 
             if (editedTodo) {

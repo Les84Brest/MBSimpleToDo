@@ -7,8 +7,8 @@ import { CheckCircle, RadioButtonUnchecked } from "@mui/icons-material";
 
 interface ToDoItemProps {
     todo: ToDo;
-    onClickDelete: (id: number) => void;
-    onClickComplete: (id: number, todoStatus: boolean) => void;
+    onClickDelete: (id: string) => void;
+    onClickComplete: (id: string, todoStatus: boolean) => void;
 }
 
 const ToDoItem: FC<ToDoItemProps> = ({ todo, onClickDelete, onClickComplete }) => {

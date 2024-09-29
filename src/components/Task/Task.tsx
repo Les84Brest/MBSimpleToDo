@@ -33,11 +33,11 @@ const Task: FC<ITask> = ({ id, taskName, todos }) => {
 
     const { openEditTaskModal } = useAddEditModaleTask();
 
-    const cbDeleteTodo = useCallback<(id: number) => void>((id) => {
+    const cbDeleteTodo = useCallback<(id: string) => void>((id) => {
         deleteTodo(id);
     }, [deleteTodo]);
 
-    const cbCompleteTodo = useCallback<(id: number, todoStatus: boolean) => void>((id, todoStatus) => {
+    const cbCompleteTodo = useCallback<(id: string, todoStatus: boolean) => void>((id, todoStatus) => {
         completeToDo(id, todoStatus);
     }, [completeToDo]);
 

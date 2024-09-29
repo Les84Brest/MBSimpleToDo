@@ -1,11 +1,11 @@
 export type ToDo = {
-    id: number;
+    id: string;
     title: string;
     completed: boolean;
 }
 
 export interface ITask {
-    id: number;
+    id: string;
     taskName: string;
     todos: ToDo[];
 }
